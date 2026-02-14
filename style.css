@@ -269,11 +269,29 @@ button.ghost:hover {
   text-transform: uppercase;
 }
 
-.loading-text {
-  font-size: 1.4rem;
+#promptText {
+  font-size: 1.6rem;
   font-weight: 700;
-  text-align: center;
+  line-height: 1.4;
 }
+
+.loading-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+#introText {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.sassLine {
+  font-size: 1.4rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
 
 .results-controls {
   display: flex;
