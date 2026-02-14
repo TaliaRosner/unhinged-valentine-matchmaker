@@ -287,6 +287,16 @@ function renderPrompt() {
   });
 }
 
+let currentMatchImgSrc = ""; // store the match image for baby mode
+
+const babyBtn = document.getElementById("babyBtn");
+const babyCard = document.getElementById("babyCard");
+const userPhotoInput = document.getElementById("userPhoto");
+const makeBabyBtn = document.getElementById("makeBabyBtn");
+const backToResultsBtn = document.getElementById("backToResultsBtn");
+const babyCanvas = document.getElementById("babyCanvas");
+const babyCtx = babyCanvas.getContext("2d");
+
 // ---------------------------
 // 6) Results Flow
 // ---------------------------
@@ -308,6 +318,7 @@ function showResults() {
     if (matchImgEl && match.img) {
       matchImgEl.src = match.img;
       matchImgEl.alt = `${match.name} photo`;
+      currentMatchImgSrc = match.img; // store the match image src for baby mode-
     }
 
     gameCard.classList.add("hidden");
@@ -365,10 +376,6 @@ Take it here: ${window.location.href}
   }
 });
 
-const babyBtn = document.getElementById("babyBtn");
-const babyCard = document.getElementById("babyCard");
-const backToResultsBtn = document.getElementById("backToResultsBtn");
-
 babyBtn.addEventListener("click", () => {
   resultCard.classList.add("hidden");
   babyCard.classList.remove("hidden");
@@ -378,6 +385,77 @@ backToResultsBtn.addEventListener("click", () => {
   babyCard.classList.add("hidden");
   resultCard.classList.remove("hidden");
 });
+
+babyBtn.addEventListener("click", () => {
+  resultCard.classList.add("hidden");
+  babyCard.classList.remove("hidden");
+  // optional: clear canvas each time
+  babyCtx.clearRect(0, 0, babyCanvas.width, babyCanvas.height);
+});
+
+backToResultsBtn.addEventListener("click", () => {
+  babyCard.classList.add("hidden");
+  resultCard.classList.remove("hidden");
+});
+
+makeBabyBtn.addEventListener("click", () => {
+  const file = userPhotoInput.files[0];
+  if (!file) {
+    alert("Upload your pic first 😈");
+    return;
+  }
+  if (!currentMatchImgSrc) {
+    alert("No Valentine match image found. Take the quiz first.");
+    return;
+  }
+
+  const userURL = URL.createObjectURL(file);
+
+  const userImg = new Image();
+  const matchImg = new Image();
+  matchImg.src = currentMatchImgSrc;
+  userImg.src = userURL;
+
+  let loaded = 0;
+  const done = () => {
+    loaded++;
+    if (loaded < 2) return;
+
+    // Draw both images blended (client-side, no upload)
+    const w = babyCanvas.width;
+    const h = babyCanvas.height;
+    babyCtx.clearRect(0, 0, w, h);
+
+    drawCover(babyCtx, userImg, 0, 0, w, h);
+    babyCtx.globalAlpha = 0.5;
+    drawCover(babyCtx, matchImg, 0, 0, w, h);
+    babyCtx.globalAlpha = 1;
+
+    // lil “nightmare fuel” polish
+    babyCtx.fillText("", 0, 0); // keeps some browsers happy
+    URL.revokeObjectURL(userURL);
+  };
+
+  userImg.onload = done;
+  matchImg.onload = done;
+  userImg.onerror = () => alert("Couldn’t load your photo.");
+  matchImg.onerror = () => alert("Couldn’t load the match image.");
+});
+
+// helper: cover-crop image into canvas
+function drawCover(ctx, img, x, y, w, h) {
+  const iw = img.naturalWidth || img.width;
+  const ih = img.naturalHeight || img.height;
+
+  const scale = Math.max(w / iw, h / ih);
+  const nw = iw * scale;
+  const nh = ih * scale;
+
+  const nx = x + (w - nw) / 2;
+  const ny = y + (h - nh) / 2;
+
+  ctx.drawImage(img, nx, ny, nw, nh);
+}
 
 // ---------------------------
 // 8) Init
