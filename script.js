@@ -27,8 +27,8 @@ const matchNameEl = document.getElementById("matchName");
 const matchTagEl = document.getElementById("matchTag");
 const matchBlurbEl = document.getElementById("matchBlurb");
 
-const songTitleEl = document.getElementById("songTitle");
-const songArtistEl = document.getElementById("songArtist");
+songTitleEl.textContent = match.weddingSong || "";
+songArtistEl.textContent = "";
 
 const againBtn = document.getElementById("againBtn");
 const shareBtn = document.getElementById("shareBtn");
@@ -373,10 +373,7 @@ Take it here: ${window.location.href}
     try {
       await navigator.clipboard.writeText(text);
       shareBtn.textContent = "Share text copied ✅";
-      setTimeout(
-        () => (shareBtn.textContent = "Share your results with friends!"),
-        1500,
-      );
+      setTimeout(() => (shareBtn.textContent = "Share your results!"), 1500);
     } catch {
       alert(text);
     }
