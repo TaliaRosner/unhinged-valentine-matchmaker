@@ -320,3 +320,17 @@ button.ghost:hover {
   gap: 12px;
   justify-content: center;
 }
+
+.results-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.secondary-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

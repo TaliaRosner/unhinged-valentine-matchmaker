@@ -27,11 +27,6 @@ const matchNameEl = document.getElementById("matchName");
 const matchTagEl = document.getElementById("matchTag");
 const matchBlurbEl = document.getElementById("matchBlurb");
 
-const TALIA_NUMBER = "17865069669";
-
-const msg = `Something is wrong with you. I got matched with ${match.name} 💀`;
-textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
-
 const songTitleEl = document.getElementById("songTitle");
 const songArtistEl = document.getElementById("songArtist");
 
@@ -320,8 +315,7 @@ function showResults() {
     matchTagEl.textContent = match.tag;
     matchBlurbEl.textContent = match.blurb;
 
-    songTitleEl.textContent = match.weddingSong?.title || "";
-    songArtistEl.textContent = match.weddingSong?.artist || "";
+    songTitleEl.textContent = `${match.weddingSong.title} by ${match.weddingSong.artist}`;
 
     if (matchImgEl && match.img) {
       matchImgEl.src = match.img;
@@ -331,6 +325,11 @@ function showResults() {
     gameCard.classList.add("hidden");
     resultCard.classList.remove("hidden");
   }, 2000);
+
+  const TALIA_NUMBER = "17865069669";
+
+  const msg = `Something is wrong with you. I got matched with ${match.name} 💀`;
+  textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
 }
 
 // ---------------------------
