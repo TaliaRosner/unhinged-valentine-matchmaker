@@ -250,7 +250,8 @@ function renderPrompt() {
     btn.onclick = () => {
       answers.push(choice.vibe);
 
-      // show sass line
+      choicesEl.innerHTML = ""; // hide buttons
+      promptText.textContent = ""; // hide prompt
       sassLineEl.textContent = sassLines[sassIndex];
       sassLineEl.classList.remove("hidden");
       sassIndex++;
@@ -311,6 +312,7 @@ startBtn.addEventListener("click", () => {
 againBtn.addEventListener("click", () => {
   answers.length = 0;
   currentPromptIndex = 0;
+  sassIndex = 0; // 👈 add this
   resultCard.classList.add("hidden");
   gameCard.classList.remove("hidden");
   renderPrompt();
