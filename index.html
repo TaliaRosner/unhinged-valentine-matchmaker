@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine Matchmaker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="wrap">
+      <header class="header">
+        <h1>💘 Valentine Matchmaker</h1>
+        <p class="sub">
+          Answer a few questions and we’ll match you with an iconic Valentine.
+        </p>
+        <p class="easter-egg">
+          As a wise pop star once said, "Ra-ra, ah-ah-ah. Roma, roma-ma. Gaga,
+          ooh, la-la. Want your bad romance." - Lady Gaga, 2009
+        </p>
+      </header>
+
+      <section class="card" id="startCard">
+        <h2>Welcome to the Unhinged Valentine Matchmaker 💘</h2>
+        <p class="prompt">
+          Answer 5 mildly unhinged questions and we’ll assign you a Valentine
+          you absolutely did not ask for.
+        </p>
+        <div class="controls">
+          <button id="startBtn">Start the chaos</button>
+        </div>
+      </section>
+
+      <section class="card hidden" id="gameCard">
+        <h2 id="stepTitle">Question 1 of 5</h2>
+
+        <div class="prompt" id="promptText">
+          You get a “u up?” text at 1:37 AM. What do you reply?
+        </div>
+
+        <div id="choices" class="choices"></div>
+
+        <p class="tiny" id="hint">Find me somebody to love.</p>
+      </section>
+
+      <section class="card hidden" id="resultCard">
+        <h2>Your Match 💖</h2>
+
+        <div class="result">
+          <img
+            id="matchImg"
+            class="matchImg"
+            src="assets/placeholder.jpg"
+            alt=""
+          />
+          <div class="matchName" id="matchName">—</div>
+          <div class="matchTag" id="matchTag">—</div>
+          <p class="matchBlurb" id="matchBlurb">—</p>
+        </div>
+
+        <div class="controls">
+          <button id="againBtn">Play again</button>
+          <button id="shareBtn" class="ghost">
+            Share your results with friends!
+          </button>
+        </div>
+
+        <p class="tiny">
+          This is satire. Do not make life choices based on this website.
+        </p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
