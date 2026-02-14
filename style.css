@@ -275,3 +275,35 @@ button.ghost:hover {
   text-align: center;
 }
 
+.results-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* make all result buttons same width vibe */
+.results-controls .choice-btn,
+.results-actions .ghost {
+  min-width: 260px;
+  text-align: center;
+  text-decoration: none; /* for the <a> */
+}
+
+/* optional: make the 2 lower buttons same height as buttons */
+.results-actions .ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px; /* adjust if your .ghost already sets this */
+  border-radius: 999px;
+}

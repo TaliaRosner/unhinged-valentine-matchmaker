@@ -32,6 +32,7 @@ const songArtistEl = document.getElementById("songArtist");
 
 const againBtn = document.getElementById("againBtn");
 const shareBtn = document.getElementById("shareBtn");
+const textTaliaBtn = document.getElementById("textTaliaBtn");
 
 // ---------------------------
 // 1) Prompts (Multiple Choice)
@@ -325,6 +326,11 @@ function showResults() {
     gameCard.classList.add("hidden");
     resultCard.classList.remove("hidden");
   }, 2000);
+
+  const TALIA_NUMBER = "17865069669";
+
+  const msg = `Something is wrong with you. I got matched with ${match.name} 😭`;
+  textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
 }
 
 // ---------------------------
