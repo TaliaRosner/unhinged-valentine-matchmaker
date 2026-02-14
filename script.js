@@ -27,6 +27,9 @@ const matchNameEl = document.getElementById("matchName");
 const matchTagEl = document.getElementById("matchTag");
 const matchBlurbEl = document.getElementById("matchBlurb");
 
+const songTitleEl = document.getElementById("songTitle");
+const songArtistEl = document.getElementById("songArtist");
+
 const againBtn = document.getElementById("againBtn");
 const shareBtn = document.getElementById("shareBtn");
 
