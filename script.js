@@ -291,7 +291,6 @@ function renderPrompt() {
 // 6) Results Flow
 // ---------------------------
 function showResults() {
-  stepTitle.textContent = "Finalizing...";
   promptText.textContent =
     "Cupid clocked out early. Prepare for unhinged results…";
   promptText.classList.add("loading-text");
