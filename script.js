@@ -27,10 +27,10 @@ const againBtn = document.getElementById("againBtn");
 const shareBtn = document.getElementById("shareBtn");
 const textTaliaBtn = document.getElementById("textTaliaBtn");
 
-// ✅ ONE sass element
 const sassTextEl = document.getElementById("sassText");
 
-// This is the gray “prompt container” box (the parent of #promptText)
+const quizUI = document.getElementById("quizUI");
+
 const promptBoxEl = promptText?.parentElement;
 
 // ---------------------------
