@@ -3,24 +3,17 @@
 // ---------------------------
 // 0) Elements
 // ---------------------------
+const startCard = document.getElementById("startCard");
+const introCard = document.getElementById("introCard");
+const gameCard = document.getElementById("gameCard");
+const resultCard = document.getElementById("resultCard");
 
 const continueBtn = document.getElementById("continueBtn");
-const introCard = document.getElementById("introCard");
-
-continueBtn.addEventListener("click", () => {
-  startCard.classList.add("hidden");
-  introCard.classList.remove("hidden");
-});
-
-const startCard = document.getElementById("startCard");
 const startBtn = document.getElementById("startBtn");
 
 const promptText = document.getElementById("promptText");
 const stepTitle = document.getElementById("stepTitle");
 const choicesEl = document.getElementById("choices");
-
-const gameCard = document.getElementById("gameCard");
-const resultCard = document.getElementById("resultCard");
 
 const matchImgEl = document.getElementById("matchImg");
 const matchNameEl = document.getElementById("matchName");
@@ -28,11 +21,17 @@ const matchTagEl = document.getElementById("matchTag");
 const matchBlurbEl = document.getElementById("matchBlurb");
 
 const songTitleEl = document.getElementById("songTitle");
-const songArtistEl = document.getElementById("songArtist");
+// (You’re using 1 line now: "Title by Artist", so we don’t need songArtistEl.)
 
 const againBtn = document.getElementById("againBtn");
 const shareBtn = document.getElementById("shareBtn");
 const textTaliaBtn = document.getElementById("textTaliaBtn");
+
+// ✅ ONE sass element
+const sassTextEl = document.getElementById("sassText");
+
+// This is the gray “prompt container” box (the parent of #promptText)
+const promptBoxEl = promptText?.parentElement;
 
 // ---------------------------
 // 1) Prompts (Multiple Choice)
@@ -111,8 +110,7 @@ const answers = [];
 let sassIndex = 0;
 
 // ---------------------------
-// 2) Match Options (6 total)
-// Add img paths for ALL so your results screen can show photos.
+// 2) Match Options
 // ---------------------------
 const matches = [
   {
@@ -173,9 +171,6 @@ const matches = [
 
 // ---------------------------
 // 3) Scoring
-// Change: Obama gets his own lane "smooth" instead of sharing with Dolly.
-// Change: remove cross-feeding Spice from chaos/spicy (was biasing results).
-// Keep: group -> Spice, spicy -> Bad Bunny, chaos -> Ghostface, bickering -> Larry, wholesome -> Dolly.
 // ---------------------------
 function scoreChoice(vibe) {
   const s = {
@@ -193,6 +188,7 @@ function scoreChoice(vibe) {
   if (vibe.includes("spicy")) s.badbunny += 3;
   if (vibe.includes("group")) s.spice += 3;
   if (vibe.includes("smooth")) s.obama += 3;
+
   if (vibe.includes("smooth")) s.badbunny += 1;
   if (vibe.includes("group")) s.badbunny += 1;
   if (vibe.includes("chaos")) s.badbunny += 1;
@@ -212,17 +208,12 @@ function totalScores(allAnswers) {
 
   allAnswers.forEach((vibe) => {
     const scored = scoreChoice(vibe);
-    Object.keys(totals).forEach((k) => {
-      totals[k] += scored[k] || 0;
-    });
+    Object.keys(totals).forEach((k) => (totals[k] += scored[k] || 0));
   });
 
   return totals;
 }
 
-// ---------------------------
-// 4) Winner selection tuned for near-equal odds
-// ---------------------------
 function pickWinner(totals) {
   const groupCount = answers.filter((v) => v === "group").length;
   const smoothCount = answers.filter((v) => v === "smooth").length;
@@ -241,6 +232,9 @@ function getMatchById(id) {
   return matches.find((m) => m.id === id);
 }
 
+// ---------------------------
+// 4) Sass Lines
+// ---------------------------
 const sassLines = [
   "Your therapist warned me about you.",
   "Interesting choice. Bold. Concerning.",
@@ -249,15 +243,40 @@ const sassLines = [
   "We’re learning things today…",
 ];
 
-const sassLineEl = document.getElementById("sassLine");
+// ---------------------------
+// Helpers: enter/exit sass mode
+// ---------------------------
+function enterSassMode(line) {
+  // hide question UI
+  stepTitle.classList.add("hidden");
+  if (promptBoxEl) promptBoxEl.classList.add("hidden");
+  choicesEl.innerHTML = "";
+
+  // show sass
+  gameCard.classList.add("sass-mode");
+  sassTextEl.textContent = line;
+  sassTextEl.classList.remove("hidden");
+}
+
+function exitSassMode() {
+  sassTextEl.classList.add("hidden");
+  gameCard.classList.remove("sass-mode");
+
+  // show question UI again
+  stepTitle.classList.remove("hidden");
+  if (promptBoxEl) promptBoxEl.classList.remove("hidden");
+}
 
 // ---------------------------
 // 5) Render Prompts
 // ---------------------------
-
 function renderPrompt() {
+  // make sure normal UI is visible
   stepTitle.classList.remove("hidden");
-  promptText.classList.remove("hidden");
+  if (promptBoxEl) promptBoxEl.classList.remove("hidden");
+  sassTextEl.classList.add("hidden");
+  gameCard.classList.remove("sass-mode");
+
   const stepNum = currentPromptIndex + 1;
   stepTitle.textContent = `Question ${stepNum} of ${prompts.length}`;
   promptText.textContent = prompts[currentPromptIndex].text;
@@ -271,18 +290,13 @@ function renderPrompt() {
     btn.onclick = () => {
       answers.push(choice.vibe);
 
-      choicesEl.innerHTML = "";
-      promptText.textContent = "";
-      stepTitle.textContent = "";
-      gameCard.classList.add("sass-mode");
-      sassLineEl.textContent = sassLines[sassIndex];
-      sassLineEl.classList.remove("hidden");
+      // show sass transition
+      const line = sassLines[sassIndex % sassLines.length];
       sassIndex++;
+      enterSassMode(line);
 
       setTimeout(() => {
-        sassLineEl.classList.add("hidden");
-        gameCard.classList.remove("sass-mode");
-
+        exitSassMode();
         currentPromptIndex++;
 
         if (currentPromptIndex >= prompts.length) {
@@ -301,6 +315,11 @@ function renderPrompt() {
 // 6) Results Flow
 // ---------------------------
 function showResults() {
+  // show loading text in the prompt area
+  stepTitle.classList.remove("hidden");
+  if (promptBoxEl) promptBoxEl.classList.remove("hidden");
+
+  stepTitle.textContent = "Finalizing…";
   promptText.textContent =
     "Cupid clocked out early. Prepare for unhinged results…";
   promptText.classList.add("loading-text");
@@ -315,11 +334,15 @@ function showResults() {
     matchTagEl.textContent = match.tag;
     matchBlurbEl.textContent = match.blurb;
 
+    // ✅ "Title by Artist" format
     songTitleEl.textContent = `${match.weddingSong.title} by ${match.weddingSong.artist}`;
 
+    // ✅ update SMS link AFTER we know the match
     const TALIA_NUMBER = "17865069669";
     const msg = `Something is wrong with you. I got matched with ${match.name} 💀`;
-    textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
+    if (textTaliaBtn) {
+      textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
+    }
 
     if (matchImgEl && match.img) {
       matchImgEl.src = match.img;
@@ -334,16 +357,29 @@ function showResults() {
 // ---------------------------
 // 7) Events
 // ---------------------------
+if (continueBtn) {
+  continueBtn.addEventListener("click", () => {
+    startCard.classList.add("hidden");
+    introCard.classList.remove("hidden");
+  });
+}
+
 startBtn.addEventListener("click", () => {
-  introCard.classList.add("hidden"); // hide the intro forever
-  gameCard.classList.remove("hidden"); // show the quiz
+  introCard.classList.add("hidden");
+  gameCard.classList.remove("hidden");
   renderPrompt();
 });
 
 againBtn.addEventListener("click", () => {
   answers.length = 0;
   currentPromptIndex = 0;
-  sassIndex = 0; // 👈 add this
+  sassIndex = 0;
+
+  // reset UI
+  promptText.classList.remove("loading-text");
+  sassTextEl.classList.add("hidden");
+  gameCard.classList.remove("sass-mode");
+
   resultCard.classList.add("hidden");
   gameCard.classList.remove("hidden");
   renderPrompt();
@@ -381,3 +417,6 @@ Take it here: ${window.location.href}
 // ---------------------------
 // 8) Init
 // ---------------------------
+// make sure the quiz + results are hidden on load
+if (gameCard) gameCard.classList.add("hidden");
+if (resultCard) resultCard.classList.add("hidden");
