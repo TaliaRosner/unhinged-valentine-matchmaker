@@ -121,6 +121,7 @@ const matches = [
     img: "assets/dolly.jpg",
     blurb:
       "You’re dating joy in rhinestones. You will be emotionally supported, lightly roasted, and occasionally gifted life advice disguised as kindness. Everyone loves your partner more than you and honestly? Fair.",
+    weddingSong: { title: "I Will Always Love You", artist: "Dolly Parton" },
   },
   {
     id: "larry",
@@ -129,6 +130,7 @@ const matches = [
     img: "assets/larry.jpg",
     blurb:
       "Your relationship is 90% petty arguments about nothing and 10% deep loyalty. You fight in public, reconcile over snacks, and somehow this is foreplay.",
+    weddingSong: { title: "Toxic", artist: "Britney Spears" },
   },
   {
     id: "ghostface",
@@ -137,6 +139,7 @@ const matches = [
     img: "assets/ghostface.jpg",
     blurb:
       "You are attracted to danger, drama, and men who call from inside the house. Your friends are worried. You are thriving.",
+    weddingSong: { title: "Poison", artist: "Bell Biv DeVoe" },
   },
   {
     id: "badbunny",
@@ -145,6 +148,7 @@ const matches = [
     img: "assets/badbunny.jpg",
     blurb:
       "You’re dating a global thirst trap who is secretly emotional. You will be ignored for studio time, then worshipped like a deity at 2am. Worth it.",
+    weddingSong: { title: "Después de la Playa", artist: "Bad Bunny" },
   },
   {
     id: "spice",
@@ -153,6 +157,7 @@ const matches = [
     img: "assets/spicegirls.jpg",
     blurb:
       "You didn’t choose poly life, poly life chose you. Your calendar is chaos. Your outfits are better. You now travel with backup dancers and emotional support Brits.",
+    weddingSong: { title: "Wannabe", artist: "Spice Girls" },
   },
   {
     id: "obama",
@@ -161,6 +166,7 @@ const matches = [
     img: "assets/obama.jpg",
     blurb:
       "Your partner texts in full sentences and listens to your problems like it’s a State of the Union. You feel safe, supported, and weirdly inspired to drink more water.",
+    weddingSong: { title: "Let’s Stay Together", artist: "Al Green" },
   },
 ];
 
@@ -307,6 +313,9 @@ function showResults() {
     matchNameEl.textContent = match.name;
     matchTagEl.textContent = match.tag;
     matchBlurbEl.textContent = match.blurb;
+
+    songTitleEl.textContent = match.weddingSong?.title || "";
+    songArtistEl.textContent = match.weddingSong?.artist || "";
 
     if (matchImgEl && match.img) {
       matchImgEl.src = match.img;
