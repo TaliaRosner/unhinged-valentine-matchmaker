@@ -15,17 +15,26 @@
 
       <section class="card" id="startCard">
         <h2>Welcome to the Unhinged Valentine Matchmaker 💘</h2>
-        <p class="sub" id="subTitle">
-          Answer a few questions and we’ll match you with an iconic Valentine.
-        </p>
-        <p class="easter-egg" id="gagaQuote">
-          As a wise pop star once said, "Ra-ra, ah-ah-ah. Roma, roma-ma. Gaga,
-          ooh, la-la. Want your bad romance." - Lady Gaga, 2009
-        </p>
-        <p class="prompt">
+
+        <div class="gagaCard">
+          <p class="gaga-quote" id="gagaQuote">
+            A wise woman once said: “Ra-ra, ah-ah-ah. Roma, roma-ma. Gaga, ooh,
+            la-la. Want your bad romance.”
+          </p>
+          <p class="gagaSig">— Lady Gaga, 2009</p>
+        </div>
+
+        <div class="controls">
+          <button id="continueBtn" class="ghost">Continue</button>
+        </div>
+      </section>
+
+      <section class="card hidden" id="introCard">
+        <div class="prompt">
           Answer 5 mildly unhinged questions and we’ll assign you a Valentine
           you absolutely did not ask for.
-        </p>
+        </div>
+
         <div class="controls">
           <button id="startBtn">Start the chaos</button>
         </div>
@@ -41,8 +50,6 @@
         <div id="choices" class="choices"></div>
 
         <p class="sass hidden" id="sassLine"></p>
-
-        <p class="tiny" id="hint">Find me somebody to love.</p>
       </section>
 
       <section class="card hidden" id="resultCard">

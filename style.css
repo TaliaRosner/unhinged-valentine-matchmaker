@@ -44,6 +44,10 @@ body {
   margin-bottom: 8px;
 }
 
+#introCard .prompt {
+  text-align: center;
+}
+
 .easter-egg {
   font-size: 0.9rem;
   color: var(--muted);
@@ -225,3 +229,11 @@ button.ghost:hover {
   transform: translateY(0);
 }
 
+.sass-mode .prompt,
+.sass-mode #stepTitle {
+  display: none;
+}
+
+.sass-mode .question-box {
+  display: none;
+}

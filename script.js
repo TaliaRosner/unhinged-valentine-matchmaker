@@ -3,6 +3,15 @@
 // ---------------------------
 // 0) Elements
 // ---------------------------
+
+const continueBtn = document.getElementById("continueBtn");
+const introCard = document.getElementById("introCard");
+
+continueBtn.addEventListener("click", () => {
+  startCard.classList.add("hidden");
+  introCard.classList.remove("hidden");
+});
+
 const startCard = document.getElementById("startCard");
 const startBtn = document.getElementById("startBtn");
 
@@ -250,8 +259,10 @@ function renderPrompt() {
     btn.onclick = () => {
       answers.push(choice.vibe);
 
-      choicesEl.innerHTML = ""; // hide buttons
-      promptText.textContent = ""; // hide prompt
+      choicesEl.innerHTML = "";
+      promptText.textContent = "";
+      stepTitle.textContent = "";
+      gameCard.classList.add("sass-mode");
       sassLineEl.textContent = sassLines[sassIndex];
       sassLineEl.classList.remove("hidden");
       sassIndex++;
@@ -265,7 +276,7 @@ function renderPrompt() {
         } else {
           renderPrompt();
         }
-      }, 2500); // was ~1500, now +1 second
+      }, 2000);
     };
 
     choicesEl.appendChild(btn);
@@ -304,8 +315,8 @@ function showResults() {
 // 7) Events
 // ---------------------------
 startBtn.addEventListener("click", () => {
-  startCard.classList.add("hidden");
-  gameCard.classList.remove("hidden");
+  introCard.classList.add("hidden"); // hide the intro forever
+  gameCard.classList.remove("hidden"); // show the quiz
   renderPrompt();
 });
 
