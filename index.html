@@ -70,11 +70,35 @@
           <button id="shareBtn" class="ghost">
             Share your results with friends!
           </button>
+          <button id="babyBtn" class="choice-btn">
+            See what your weird baby would look like!
+          </button>
         </div>
 
         <p class="tiny">
           This is satire. Do not make life choices based on this website.
         </p>
+      </section>
+
+      <section class="card hidden" id="babyCard">
+        <h2>Nightmare Fuel Baby Generator</h2>
+
+        <p class="tiny">
+          Upload your pic. We’ll scientifically* mash you with your Valentine.
+        </p>
+
+        <input type="file" id="userPhoto" accept="image/*" />
+
+        <div class="controls">
+          <button id="makeBabyBtn" class="choice-btn">
+            Generate the chaos
+          </button>
+          <button id="backToResultsBtn" class="ghost">Back to results</button>
+        </div>
+
+        <canvas id="babyCanvas" width="600" height="600"></canvas>
+
+        <p class="tiny">*not science</p>
       </section>
     </main>
 

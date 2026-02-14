@@ -365,6 +365,20 @@ Take it here: ${window.location.href}
   }
 });
 
+const babyBtn = document.getElementById("babyBtn");
+const babyCard = document.getElementById("babyCard");
+const backToResultsBtn = document.getElementById("backToResultsBtn");
+
+babyBtn.addEventListener("click", () => {
+  resultCard.classList.add("hidden");
+  babyCard.classList.remove("hidden");
+});
+
+backToResultsBtn.addEventListener("click", () => {
+  babyCard.classList.add("hidden");
+  resultCard.classList.remove("hidden");
+});
+
 // ---------------------------
 // 8) Init
 // ---------------------------
