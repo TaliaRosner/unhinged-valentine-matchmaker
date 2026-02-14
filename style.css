@@ -268,3 +268,9 @@ button.ghost:hover {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
+.loading-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+}

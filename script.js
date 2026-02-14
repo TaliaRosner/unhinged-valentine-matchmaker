@@ -294,6 +294,7 @@ function showResults() {
   stepTitle.textContent = "Finalizing...";
   promptText.textContent =
     "Cupid clocked out early. Prepare for unhinged results…";
+  promptText.classList.add("loading-text");
   choicesEl.innerHTML = "";
 
   setTimeout(() => {
