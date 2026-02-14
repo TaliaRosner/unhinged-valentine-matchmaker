@@ -290,7 +290,7 @@ function renderPrompt() {
         } else {
           renderPrompt();
         }
-      }, 1800);
+      }, 1850);
     };
 
     choicesEl.appendChild(btn);
