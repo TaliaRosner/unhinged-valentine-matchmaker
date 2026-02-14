@@ -297,6 +297,8 @@ function renderPrompt() {
 
       setTimeout(() => {
         exitSassMode();
+        sassTextEl.classList.add("hidden");
+
         currentPromptIndex++;
 
         if (currentPromptIndex >= prompts.length) {
