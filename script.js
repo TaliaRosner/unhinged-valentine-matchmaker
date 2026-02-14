@@ -23,15 +23,7 @@ const shareBtn = document.getElementById("shareBtn");
 
 // ---------------------------
 // 1) Prompts (Multiple Choice)
-// Goal: as close to 1/6 each as possible with 5 questions.
-// We introduce a dedicated "smooth" lane for Obama so he doesn't share with Dolly.
-// We keep "group" for Spice.
-// Each question still has 4 options, so the strategy is:
-// - include group in 2 questions
-// - include smooth in 2 questions
-// - keep the other lanes present enough
-// - and use small tie-breaking/guardrails at the end (below)
-// ---------------------------
+//--------------------------
 const prompts = [
   {
     text: "You get a “u up?” text at 1:37 AM. What do you do?",
@@ -103,6 +95,7 @@ const prompts = [
 
 let currentPromptIndex = 0;
 const answers = [];
+let sassIndex = 0;
 
 // ---------------------------
 // 2) Match Options (6 total)
@@ -210,13 +203,6 @@ function totalScores(allAnswers) {
 
 // ---------------------------
 // 4) Winner selection tuned for near-equal odds
-// With 5 questions and 6 outcomes, perfect 1/6 is impossible without pure randomness,
-// so we do "as close as mathematically possible" while still letting answers matter:
-//
-// Guardrails:
-// - If group chosen 2+ times -> Spice
-// - If smooth chosen 2+ times -> Obama
-// Otherwise we pick highest score; ties random.
 // ---------------------------
 function pickWinner(totals) {
   const groupCount = answers.filter((v) => v === "group").length;
@@ -236,9 +222,20 @@ function getMatchById(id) {
   return matches.find((m) => m.id === id);
 }
 
+const sassLines = [
+  "Your therapist warned me about you.",
+  "Interesting choice. Bold. Concerning.",
+  "This is why your friends have opinions.",
+  "Okay but who hurt you?",
+  "We’re learning things today…",
+];
+
+const sassLineEl = document.getElementById("sassLine");
+
 // ---------------------------
 // 5) Render Prompts
 // ---------------------------
+
 function renderPrompt() {
   const stepNum = currentPromptIndex + 1;
   stepTitle.textContent = `Question ${stepNum} of ${prompts.length}`;
@@ -252,13 +249,22 @@ function renderPrompt() {
 
     btn.onclick = () => {
       answers.push(choice.vibe);
-      currentPromptIndex++;
 
-      if (currentPromptIndex >= prompts.length) {
-        showResults();
-      } else {
-        renderPrompt();
-      }
+      // show sass line
+      sassLineEl.textContent = sassLines[sassIndex];
+      sassLineEl.classList.remove("hidden");
+      sassIndex++;
+
+      setTimeout(() => {
+        sassLineEl.classList.add("hidden");
+        currentPromptIndex++;
+
+        if (currentPromptIndex >= prompts.length) {
+          showResults();
+        } else {
+          renderPrompt();
+        }
+      }, 2500); // was ~1500, now +1 second
     };
 
     choicesEl.appendChild(btn);
