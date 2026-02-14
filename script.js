@@ -317,6 +317,10 @@ function showResults() {
 
     songTitleEl.textContent = `${match.weddingSong.title} by ${match.weddingSong.artist}`;
 
+    const TALIA_NUMBER = "17865069669";
+    const msg = `Something is wrong with you. I got matched with ${match.name} 💀`;
+    textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
+
     if (matchImgEl && match.img) {
       matchImgEl.src = match.img;
       matchImgEl.alt = `${match.name} photo`;
@@ -325,11 +329,6 @@ function showResults() {
     gameCard.classList.add("hidden");
     resultCard.classList.remove("hidden");
   }, 2000);
-
-  const TALIA_NUMBER = "17865069669";
-
-  const msg = `Something is wrong with you. I got matched with ${match.name} 💀`;
-  textTaliaBtn.href = `sms:${TALIA_NUMBER}?&body=${encodeURIComponent(msg)}`;
 }
 
 // ---------------------------

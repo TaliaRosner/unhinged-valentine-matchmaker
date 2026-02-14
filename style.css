@@ -334,3 +334,7 @@ button.ghost:hover {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.songLabel {
+  font-weight: 800;
+}
