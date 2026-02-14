@@ -308,7 +308,7 @@ function showResults() {
 
     gameCard.classList.add("hidden");
     resultCard.classList.remove("hidden");
-  }, 3000);
+  }, 2000);
 }
 
 // ---------------------------

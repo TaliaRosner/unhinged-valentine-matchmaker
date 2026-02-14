@@ -237,3 +237,33 @@ button.ghost:hover {
 .sass-mode .question-box {
   display: none;
 }
+
+.gagaCard {
+  margin: 24px 0;
+  padding: 28px 24px;
+  border-radius: 20px;
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 105, 180, 0.15),
+    rgba(0, 0, 0, 0.4)
+  );
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.gaga-quote {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  color: #ff8acb;
+  text-shadow: 0 2px 12px rgba(255, 105, 180, 0.4);
+  margin-bottom: 12px;
+}
+
+.gagaSig {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
