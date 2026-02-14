@@ -246,6 +246,8 @@ const sassLineEl = document.getElementById("sassLine");
 // ---------------------------
 
 function renderPrompt() {
+  stepTitle.classList.remove("hidden");
+  promptText.classList.remove("hidden");
   const stepNum = currentPromptIndex + 1;
   stepTitle.textContent = `Question ${stepNum} of ${prompts.length}`;
   promptText.textContent = prompts[currentPromptIndex].text;
@@ -269,6 +271,8 @@ function renderPrompt() {
 
       setTimeout(() => {
         sassLineEl.classList.add("hidden");
+        gameCard.classList.remove("sass-mode");
+
         currentPromptIndex++;
 
         if (currentPromptIndex >= prompts.length) {
@@ -364,4 +368,3 @@ Take it here: ${window.location.href}
 // ---------------------------
 // 8) Init
 // ---------------------------
-renderPrompt();
