@@ -26,7 +26,6 @@ body {
 
 .header { text-align: center; margin-bottom: 24px; }
 .header h1 { font-size: 2.2rem; margin-bottom: 8px; letter-spacing: 0.5px; }
-.sub { color: var(--accent-soft); font-size: 1.05rem; margin-bottom: 8px; }
 
 .card {
   background: linear-gradient(180deg, #1a1a2a, #12121c);
@@ -39,6 +38,45 @@ body {
 
 .card h2 { margin: 0 0 10px; font-size: 1.1rem; }
 
+/* ---------- Gaga Intro Card ---------- */
+.gagaCard{
+  padding: 22px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    radial-gradient(circle at top left, rgba(255,77,141,0.18), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(255,143,184,0.14), transparent 55%),
+    rgba(255,255,255,0.02);
+  text-align: center;
+}
+
+.gaga-quote{
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  margin-bottom: 10px;
+}
+
+.gaga-quote-line{
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 2.1rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffffff, var(--accent-soft));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gagaSig{
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* ---------- Prompt ---------- */
 .prompt {
   background: rgba(255,255,255,0.03);
   border: 1px dashed var(--border);
@@ -49,6 +87,14 @@ body {
   font-weight: 700;
 }
 
+.loading-text{
+  text-align: center;
+  font-size: 1.65rem;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+/* ---------- Buttons ---------- */
 .controls {
   display: flex;
   flex-direction: column;
@@ -56,36 +102,46 @@ body {
   gap: 12px;
 }
 
-.controls .row {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-button {
-  padding: 12px 14px;
+.btn,
+button,
+a.btn {
+  padding: 12px 16px;
   border-radius: 999px;
   border: none;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
+.btn.primary,
 button:not(.ghost) {
   background: linear-gradient(135deg, var(--accent), #ff7aa8);
   color: #0f0f14;
 }
 
+.btn.ghost,
 button.ghost {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--muted);
 }
 
+.btn.ghost:hover,
+button.ghost:hover {
+  border-color: rgba(255,255,255,0.18);
+  color: var(--text);
+}
+
 .hidden {
   display: none !important;
 }
 
+/* ---------- Choices ---------- */
 .choices {
   display: grid;
   gap: 10px;
@@ -101,6 +157,7 @@ button.ghost {
   font-size: 0.95rem;
 }
 
+/* Sass screen */
 .sass-mode .prompt,
 .sass-mode #stepTitle,
 .sass-mode .choices {
@@ -117,6 +174,17 @@ button.ghost {
   margin-top: 1rem;
 }
 
+/* ---------- Results Centering ---------- */
+.resultsTitle{
+  text-align: center;
+  font-size: 1.25rem;
+  margin-bottom: 14px;
+}
+
+.result{
+  text-align: center;
+}
+
 .matchImg {
   width: 220px;
   height: 260px;
@@ -128,25 +196,51 @@ button.ghost {
 }
 
 .matchName {
-  font-size: 1.4rem;
-  font-weight: 800;
+  font-size: 1.6rem;
+  font-weight: 900;
   color: var(--accent-soft);
+  margin-top: 6px;
 }
 
-.matchBlurb { font-size: 0.95rem; line-height: 1.45; }
+.matchTag{
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.matchBlurb {
+  font-size: 0.98rem;
+  line-height: 1.5;
+  max-width: 52ch;
+  margin: 12px auto 0;
+}
+
+.weddingSong{
+  margin-top: 16px;
+}
+
+.songLabel { font-weight: 900; }
+.songTitle { font-weight: 500; margin-top: 6px; }
+.songArtist { font-weight: 500; margin-top: 6px; }
 
 .results-controls {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  margin-top: 18px;
 }
 
-.results-actions {
+.secondary-actions{
   display: flex;
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.songLabel { font-weight: 800; }
+/* tiny footer text */
+.tiny{
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 14px;
+}

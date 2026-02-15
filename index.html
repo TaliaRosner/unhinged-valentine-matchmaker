@@ -16,12 +16,18 @@
       <section class="card" id="startCard">
         <div class="gagaCard">
           <div class="gaga-quote">
-            A wise woman once said: “Ra-ra, ah-ah-ah…”
+            A wise woman once said:<br />
+            <span class="gaga-quote-line"
+              >“Ra-ra, ah-ah-ah.<br />
+              Roma, roma-ma.<br />
+              Gaga, ooh, la-la.<br />
+              Want your bad romance.”</span
+            >
           </div>
           <div class="gagaSig">— Lady Gaga, 2009</div>
 
           <div class="controls">
-            <button id="continueBtn">Continue</button>
+            <button id="continueBtn" class="btn primary">Continue</button>
           </div>
         </div>
       </section>
@@ -33,7 +39,7 @@
         </div>
 
         <div class="controls">
-          <button id="startBtn">Start the chaos</button>
+          <button id="startBtn" class="btn primary">Start the chaos</button>
         </div>
       </section>
 
@@ -52,7 +58,7 @@
       </section>
 
       <section class="card hidden" id="resultCard">
-        <h2>Your Match 💖</h2>
+        <h2 class="resultsTitle">Your Match 💖</h2>
 
         <div class="result">
           <img
@@ -64,6 +70,7 @@
           <div class="matchName" id="matchName">—</div>
           <div class="matchTag" id="matchTag">—</div>
           <p class="matchBlurb" id="matchBlurb">—</p>
+
           <div class="weddingSong">
             <div class="songLabel">💍 Your Wedding Song:</div>
             <div class="songTitle" id="songTitle"></div>
@@ -72,13 +79,15 @@
         </div>
 
         <div class="controls results-controls">
-          <button id="againBtn">Play again</button>
+          <button id="againBtn" class="btn primary">Play again</button>
 
           <div class="secondary-actions">
-            <button id="shareBtn" class="ghost">
+            <button id="shareBtn" class="btn primary">
               Share your results with friends!
             </button>
-            <a id="textTaliaBtn" class="ghost">Text Talia your thoughts!</a>
+            <a id="textTaliaBtn" class="btn primary" href="#">
+              Text Talia your thoughts!
+            </a>
           </div>
         </div>
 

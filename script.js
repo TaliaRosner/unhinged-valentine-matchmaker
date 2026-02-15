@@ -21,17 +21,18 @@ const matchTagEl = document.getElementById("matchTag");
 const matchBlurbEl = document.getElementById("matchBlurb");
 
 const songTitleEl = document.getElementById("songTitle");
-// (You’re using 1 line now: "Title by Artist", so we don’t need songArtistEl.)
+const songArtistEl = document.getElementById("songArtist");
 
 const againBtn = document.getElementById("againBtn");
 const shareBtn = document.getElementById("shareBtn");
 const textTaliaBtn = document.getElementById("textTaliaBtn");
 
 const sassTextEl = document.getElementById("sassText");
-
 const quizUI = document.getElementById("quizUI");
 
 const promptBoxEl = promptText?.parentElement;
+
+const originalShareBtnText = shareBtn?.textContent || "Share your results!";
 
 // ---------------------------
 // 1) Prompts (Multiple Choice)
@@ -182,7 +183,7 @@ function scoreChoice(vibe) {
     obama: 0,
   };
 
-  if (vibe.includes("wholesome")) s.dolly += 3;
+  if (vibe.includes("wholesome")) s.dolly += 2;
   if (vibe.includes("bickering")) s.larry += 3;
   if (vibe.includes("chaos")) s.ghostface += 3;
   if (vibe.includes("spicy")) s.badbunny += 3;
@@ -271,8 +272,11 @@ function exitSassMode() {
 // 5) Render Prompts
 // ---------------------------
 function renderPrompt() {
-  sassTextEl.classList.add("hidden"); // hide sass text
-  gameCard.classList.remove("sass-mode"); // remove sass layout mode
+  promptText.classList.remove("loading-text");
+  gameCard.classList.remove("loading-state");
+
+  sassTextEl.classList.add("hidden");
+  gameCard.classList.remove("sass-mode");
 
   stepTitle.classList.remove("hidden");
   if (promptBoxEl) promptBoxEl.classList.remove("hidden");
@@ -317,10 +321,13 @@ function renderPrompt() {
 // 6) Results Flow
 // ---------------------------
 function showResults() {
+  // ✅ Hide "Question 5 of 5" during loading
+  stepTitle.classList.add("hidden");
+
   // show loading text in the prompt area
-  stepTitle.classList.remove("hidden");
   if (promptBoxEl) promptBoxEl.classList.remove("hidden");
 
+  gameCard.classList.add("loading-state");
   promptText.textContent =
     "Cupid clocked out early. Prepare for unhinged results…";
   promptText.classList.add("loading-text");
@@ -335,8 +342,9 @@ function showResults() {
     matchTagEl.textContent = match.tag;
     matchBlurbEl.textContent = match.blurb;
 
-    // ✅ "Title by Artist" format
-    songTitleEl.textContent = `${match.weddingSong.title} by ${match.weddingSong.artist}`;
+    // ✅ split into title + artist (both centered in CSS)
+    songTitleEl.textContent = match.weddingSong.title;
+    songArtistEl.textContent = `by ${match.weddingSong.artist}`;
 
     // ✅ update SMS link AFTER we know the match
     const TALIA_NUMBER = "17865069669";
@@ -365,59 +373,68 @@ if (continueBtn) {
   });
 }
 
-startBtn.addEventListener("click", () => {
-  introCard.classList.add("hidden");
-  gameCard.classList.remove("hidden");
-  renderPrompt();
-});
+if (startBtn) {
+  startBtn.addEventListener("click", () => {
+    introCard.classList.add("hidden");
+    gameCard.classList.remove("hidden");
+    renderPrompt();
+  });
+}
 
-againBtn.addEventListener("click", () => {
-  answers.length = 0;
-  currentPromptIndex = 0;
-  sassIndex = 0;
+if (againBtn) {
+  againBtn.addEventListener("click", () => {
+    answers.length = 0;
+    currentPromptIndex = 0;
+    sassIndex = 0;
 
-  // reset UI
-  promptText.classList.remove("loading-text");
-  sassTextEl.classList.add("hidden");
-  gameCard.classList.remove("sass-mode");
+    // reset UI
+    promptText.classList.remove("loading-text");
+    gameCard.classList.remove("loading-state");
+    sassTextEl.classList.add("hidden");
+    gameCard.classList.remove("sass-mode");
 
-  resultCard.classList.add("hidden");
-  gameCard.classList.remove("hidden");
-  renderPrompt();
-});
+    // reset share button text (nice-to-have)
+    if (shareBtn) shareBtn.textContent = originalShareBtnText;
 
-shareBtn.addEventListener("click", async () => {
-  const text = `💘 My Valentine Match: ${matchNameEl.textContent} — ${matchTagEl.textContent}
+    resultCard.classList.add("hidden");
+    gameCard.classList.remove("hidden");
+    renderPrompt();
+  });
+}
+
+if (shareBtn) {
+  shareBtn.addEventListener("click", async () => {
+    const text = `💘 My Valentine Match: ${matchNameEl.textContent} — ${matchTagEl.textContent}
 
 I took the "Cupid Clocked Out Early" quiz and my results were spiritually accurate.
 
 Take it here: ${window.location.href}
 `;
 
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: "Cupid Clocked Out Early",
-        text,
-        url: window.location.href,
-      });
-    } catch {
-      // user canceled share
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Cupid Clocked Out Early",
+          text,
+          url: window.location.href,
+        });
+      } catch {
+        // user canceled share
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        shareBtn.textContent = "Share text copied ✅";
+        setTimeout(() => (shareBtn.textContent = originalShareBtnText), 1500);
+      } catch {
+        alert(text);
+      }
     }
-  } else {
-    try {
-      await navigator.clipboard.writeText(text);
-      shareBtn.textContent = "Share text copied ✅";
-      setTimeout(() => (shareBtn.textContent = "Share your results!"), 1500);
-    } catch {
-      alert(text);
-    }
-  }
-});
+  });
+}
 
 // ---------------------------
 // 8) Init
 // ---------------------------
-// make sure the quiz + results are hidden on load
 if (gameCard) gameCard.classList.add("hidden");
 if (resultCard) resultCard.classList.add("hidden");
