@@ -271,11 +271,11 @@ function exitSassMode() {
 // 5) Render Prompts
 // ---------------------------
 function renderPrompt() {
-  // make sure normal UI is visible
+  sassTextEl.classList.add("hidden"); // hide sass text
+  gameCard.classList.remove("sass-mode"); // remove sass layout mode
+
   stepTitle.classList.remove("hidden");
   if (promptBoxEl) promptBoxEl.classList.remove("hidden");
-  sassTextEl.classList.add("hidden");
-  gameCard.classList.remove("sass-mode");
 
   const stepNum = currentPromptIndex + 1;
   stepTitle.textContent = `Question ${stepNum} of ${prompts.length}`;
@@ -321,7 +321,6 @@ function showResults() {
   stepTitle.classList.remove("hidden");
   if (promptBoxEl) promptBoxEl.classList.remove("hidden");
 
-  stepTitle.textContent = "Finalizing…";
   promptText.textContent =
     "Cupid clocked out early. Prepare for unhinged results…";
   promptText.classList.add("loading-text");
