@@ -153,7 +153,7 @@ button.ghost:hover {
   color: var(--text);
   padding: 12px 14px;
   border-radius: 12px;
-  text-align: left;
+  text-align: center;
   font-size: 0.95rem;
 }
 
